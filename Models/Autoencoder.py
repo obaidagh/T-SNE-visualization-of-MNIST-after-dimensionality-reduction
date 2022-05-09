@@ -39,8 +39,8 @@ def Compile_model(input_shape=(28, 28,1),code_size=9):
 
 def Train_model(Model,Train_X,Train_Y,Val_X,Val_Y):
     #callbacks
-    reduce_LR = callbacks.ReduceLROnPlateau(monitor='val_mean_absolute_error',patience=2, verbose=1, factor=0.5, min_lr=0.000000001)
-    early_stopping = callbacks.EarlyStopping(monitor='val_loss', patience=30,restore_best_weights=True,verbose=0)
+    reduce_LR = callbacks.ReduceLROnPlateau(monitor='val_loss',patience=2, verbose=1, factor=0.5, min_lr=0.000000001)
+    early_stopping = callbacks.EarlyStopping(monitor='val_mean_squared_error', patience=30,restore_best_weights=True,verbose=0)
     os.chdir('./Models')
     weights_file = 'Tsne_mnist_mlp.h5'
     #if model is alerady trained load weights and training history
