@@ -38,20 +38,26 @@ def Compile_model(input_shape=(28, 28,1),code_size=9):
 
 
 def Train_model(Model,Train_X,Train_Y,Val_X,Val_Y):
+    
     #callbacks
     reduce_LR = callbacks.ReduceLROnPlateau(monitor='val_loss',patience=2, verbose=1, factor=0.5, min_lr=0.000000001)
     early_stopping = callbacks.EarlyStopping(monitor='val_mean_squared_error', patience=30,restore_best_weights=True,verbose=0)
-    os.chdir('./Models')
+    
+    os.chdir('./saved')
     weights_file = 'Tsne_mnist_mlp.h5'
+    
     #if model is alerady trained load weights and training history
     if os.path.exists(weights_file):
+        
         Model.load_weights(weights_file)
         my_history=np.load('my_history.npy',allow_pickle='TRUE').item()
         print('Loaded weights!')
+        
     #if not train the model
     else:
+        
         history_keras =  Model.fit(Train_X,Train_Y, epochs=200, validation_data=(Val_X,Val_Y), callbacks=[early_stopping,reduce_LR],verbose=0)
-        Model.save_weights('Tsne_mnist_mlp.h5')
+        Model.save_weights(weights_file)
         np.save('my_history.npy',history_keras.history)
         my_history=history_keras.history
         
