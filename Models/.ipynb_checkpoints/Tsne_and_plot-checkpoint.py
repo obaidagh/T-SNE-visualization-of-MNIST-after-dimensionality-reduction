@@ -6,7 +6,7 @@ import numpy as np
 
 def T_sne_train_or_load(Dim_reduction_tech,data,n_components,early_exaggeration):
     
-    os.chdir('./saved')
+    #os.chdir('./saved')
 
     TSNE_file = 'Tsne_XT_' + Dim_reduction_tech + '_9.npy'
     Tsne_data = 'Tsne_XT_' + Dim_reduction_tech + '_9'
@@ -23,7 +23,10 @@ def T_sne_train_or_load(Dim_reduction_tech,data,n_components,early_exaggeration)
     return Tsne_data
 
 def plot_Tsne(Tsne_data,label,title):
-    fig = px.scatter(x=Tsne_data[:,0], y=Tsne_data[:,1], color=label)
+    fig = px.scatter(x=Tsne_data[:,0], 
+                     y=Tsne_data[:,1],
+                     color=label,
+                     color_discrete_sequence=px.colors.qualitative.Pastel,)
 
     fig.update_traces(hoverinfo="all")
     fig.update_layout(
